@@ -1,5 +1,10 @@
 export const controllerHtml = `
 <div id="shorts-controller-overlay">
+  <div class="processbar">
+    <div class="processbar__container">
+      <div class="processbar__thumb"></div>
+    </div>
+  </div>
   <div class="mute-button">
     <svg height="100%" version="1.1" viewBox="0 0 36 36" width="100%">
       <path

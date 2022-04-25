@@ -41,6 +41,9 @@ const start = async () => {
           const rewindButton = playerContainer.querySelector(
             '.rewind-button'
           ) as HTMLButtonElement;
+          const processbarThumb = playerContainer.querySelector(
+            '.processbar__thumb'
+          ) as HTMLDivElement;
 
           playerContainerObserver.observe('video', {
             add(videoElement) {
@@ -63,6 +66,12 @@ const start = async () => {
               });
 
               const _videoElement = videoElement as HTMLVideoElement;
+              videoElement.addEventListener('timeupdate', () => {
+                const duration = _videoElement.duration;
+                const currentTime = _videoElement.currentTime;
+                const processbarWidth = (currentTime / duration) * 100 + '%';
+                processbarThumb.style.width = processbarWidth;
+              });
               if (_videoElement.paused) {
                 playPauseIcon.setAttribute('d', pauseIconD);
                 playPauseIcon.setAttribute('id', pauseIconId);
