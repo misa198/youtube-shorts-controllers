@@ -117,6 +117,17 @@ const start = async () => {
                     parseInt(items[TIME_STEP_KEY], 10) || 5;
                 });
               });
+
+              playerContainer.addEventListener('keydown', (e) => {
+                switch ((e as KeyboardEvent).key) {
+                  case 'ArrowLeft':
+                    rewindButton.click();
+                    break;
+                  case 'ArrowRight':
+                    forwardButton.click();
+                    break;
+                }
+              });
             },
           });
         },
