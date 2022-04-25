@@ -5,6 +5,22 @@
 #player-container {
   position: relative !important;
 
+  .mute-button {
+    width: 36px;
+    height: 36px;
+    position: absolute !important;
+    top: 16px;
+    right: 16px;
+    z-index: 11;
+    cursor: pointer;
+
+    svg {
+      width: 36px;
+      height: 36px;
+      fill: #fff;
+    }
+  }
+
   #shorts-controller-overlay {
     position: absolute;
     top: 0;

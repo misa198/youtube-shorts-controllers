@@ -7,6 +7,10 @@ import {
   pauseIconId,
   playIconD,
   playIconId,
+  mutedIconD,
+  mutedIconId,
+  unmuteIconD,
+  unmuteIconId,
 } from './constants/controllerHtml';
 
 const start = async () => {
@@ -25,6 +29,13 @@ const start = async () => {
           const playPauseIcon = playButton.querySelector(
             '.play-pause-icon-path'
           ) as HTMLButtonElement;
+          const speakerIconPath = playerContainer.querySelector(
+            '.speaker-icon-path'
+          ) as HTMLButtonElement;
+          const muteButton = playerContainer.querySelector(
+            '.mute-button'
+          ) as HTMLButtonElement;
+
           playerContainerObserver.observe('video', {
             add(videoElement) {
               videoElement.addEventListener('play', () => {
@@ -35,6 +46,16 @@ const start = async () => {
                 playPauseIcon.setAttribute('d', pauseIconD);
                 playButton.setAttribute('id', pauseIconId);
               });
+              videoElement.addEventListener('volumechange', () => {
+                if (_videoElement.muted) {
+                  speakerIconPath.setAttribute('d', mutedIconD);
+                  speakerIconPath.setAttribute('id', mutedIconId);
+                } else {
+                  speakerIconPath.setAttribute('d', unmuteIconD);
+                  speakerIconPath.setAttribute('id', unmuteIconId);
+                }
+              });
+
               const _videoElement = videoElement as HTMLVideoElement;
               if (_videoElement.paused) {
                 playPauseIcon.setAttribute('d', pauseIconD);
@@ -43,11 +64,27 @@ const start = async () => {
                 playPauseIcon.setAttribute('d', playIconD);
                 playPauseIcon.setAttribute('id', playIconId);
               }
+              if (_videoElement.muted) {
+                speakerIconPath.setAttribute('d', mutedIconD);
+                speakerIconPath.setAttribute('id', pauseIconId);
+              } else {
+                speakerIconPath.setAttribute('d', unmuteIconD);
+                speakerIconPath.setAttribute('id', unmuteIconId);
+              }
+
               playButton.addEventListener('click', () => {
                 if (_videoElement.paused) {
                   _videoElement.play();
                 } else {
                   _videoElement.pause();
+                }
+              });
+
+              muteButton.addEventListener('click', () => {
+                if (_videoElement.muted) {
+                  _videoElement.muted = false;
+                } else {
+                  _videoElement.muted = true;
                 }
               });
             },
