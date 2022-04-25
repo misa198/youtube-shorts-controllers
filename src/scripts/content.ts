@@ -24,26 +24,30 @@ const start = async () => {
           ) as HTMLButtonElement;
           const playPauseIcon = playButton.querySelector(
             '.play-pause-icon-path'
-          );
+          ) as HTMLButtonElement;
           playerContainerObserver.observe('video', {
             add(videoElement) {
+              videoElement.addEventListener('play', () => {
+                playPauseIcon.setAttribute('d', playIconD);
+                playButton.setAttribute('id', playIconId);
+              });
+              videoElement.addEventListener('pause', () => {
+                playPauseIcon.setAttribute('d', pauseIconD);
+                playButton.setAttribute('id', pauseIconId);
+              });
               const _videoElement = videoElement as HTMLVideoElement;
               if (_videoElement.paused) {
-                playPauseIcon?.setAttribute('d', pauseIconD);
-                playPauseIcon?.setAttribute('id', pauseIconId);
+                playPauseIcon.setAttribute('d', pauseIconD);
+                playPauseIcon.setAttribute('id', pauseIconId);
               } else {
-                playPauseIcon?.setAttribute('d', playIconD);
-                playPauseIcon?.setAttribute('id', playIconId);
+                playPauseIcon.setAttribute('d', playIconD);
+                playPauseIcon.setAttribute('id', playIconId);
               }
               playButton.addEventListener('click', () => {
                 if (_videoElement.paused) {
                   _videoElement.play();
-                  playPauseIcon?.setAttribute('d', playIconD);
-                  playPauseIcon?.setAttribute('id', playIconId);
                 } else {
                   _videoElement.pause();
-                  playPauseIcon?.setAttribute('d', pauseIconD);
-                  playPauseIcon?.setAttribute('id', pauseIconId);
                 }
               });
             },
