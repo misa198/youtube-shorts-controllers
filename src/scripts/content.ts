@@ -1,6 +1,7 @@
 import * as domLoaded from 'dom-loaded';
 import SelectorObserver, { observe } from 'selector-observer';
 import '../styles/content.scss';
+import { TIME_STEP_KEY } from './constants/config';
 import {
   controllerHtml,
   pauseIconD,
@@ -12,6 +13,7 @@ import {
   unmuteIconD,
   unmuteIconId,
 } from './constants/controllerHtml';
+import { get } from './utils/storage';
 
 const start = async () => {
   await domLoaded;
@@ -104,10 +106,20 @@ const start = async () => {
               });
 
               forwardButton.addEventListener('click', () => {
-                _videoElement.currentTime += 5;
+                get([TIME_STEP_KEY], (items) => {
+                  _videoElement.currentTime += parseInt(
+                    items[TIME_STEP_KEY],
+                    10
+                  );
+                });
               });
               rewindButton.addEventListener('click', () => {
-                _videoElement.currentTime -= 5;
+                get([TIME_STEP_KEY], (items) => {
+                  _videoElement.currentTime -= parseInt(
+                    items[TIME_STEP_KEY],
+                    10
+                  );
+                });
               });
             },
           });

@@ -9,6 +9,7 @@ const options = {
   mode: 'production',
   entry: {
     content: path.join(__dirname, 'src', 'scripts', 'content.ts'),
+    popup: path.join(__dirname, 'src', 'scripts', 'popup.ts'),
   },
   output: {
     path: path.join(__dirname, 'build', process.env.PLATFORM),
@@ -51,6 +52,10 @@ const options = {
         {
           from: path.join(__dirname, 'src', 'icons/*.png'),
           to: 'icons/[name][ext]',
+        },
+        {
+          from: path.join(__dirname, 'src', 'templates', '*.html'),
+          to: '[name].html',
         },
       ],
     }),

@@ -19,8 +19,9 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
-  "permissions": ["activeTab", "tabs"],
+  "permissions": ["storage"],
   "action": {
-    "default_icon": "icons/icon64.png"
+    "default_icon": "icons/icon64.png",
+    "default_popup": "popup.html"
   }
 }
