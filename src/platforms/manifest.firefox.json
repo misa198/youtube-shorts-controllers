@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "Youtube Short Controller",
+  "author": "misa198",
+  "homepage_url": "https://github.com/misa198/youtube-shorts-controller",
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/shorts/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/icon64.png",
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "permissions": ["storage"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "youtube-shorts-controller@misa198.com"
+    }
+  }
+}

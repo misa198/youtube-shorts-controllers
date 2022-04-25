@@ -8,8 +8,9 @@
   "license": "MIT",
   "scripts": {
     "pre-commit": "lint-staged",
+    "build:firefox": "rm -rf build/firefox && cross-env PLATFORM=firefox webpack --config webpack.config.js",
     "build:chromium": "rm -rf build/chromium && cross-env PLATFORM=chromium webpack --config webpack.config.js",
-    "build": "npm run build:chromium",
+    "build": "npm run build:chromium && npm run build:firefox",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "npm run lint -- --fix"
   },

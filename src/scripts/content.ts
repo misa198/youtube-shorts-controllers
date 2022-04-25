@@ -107,18 +107,14 @@ const start = async () => {
 
               forwardButton.addEventListener('click', () => {
                 get([TIME_STEP_KEY], (items) => {
-                  _videoElement.currentTime += parseInt(
-                    items[TIME_STEP_KEY],
-                    10
-                  );
+                  _videoElement.currentTime +=
+                    parseInt(items[TIME_STEP_KEY], 10) || 5;
                 });
               });
               rewindButton.addEventListener('click', () => {
                 get([TIME_STEP_KEY], (items) => {
-                  _videoElement.currentTime -= parseInt(
-                    items[TIME_STEP_KEY],
-                    10
-                  );
+                  _videoElement.currentTime -=
+                    parseInt(items[TIME_STEP_KEY], 10) || 5;
                 });
               });
             },
