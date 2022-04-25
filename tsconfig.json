@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "lib": ["es6", "dom"],
+    "skipLibCheck": true,
+    "target": "es5",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "types": ["chrome", "firefox-webext-browser", "node"],
+    "strict": true,
+    "sourceMap": false
+  },
+  "include": ["src/scripts/**/*.ts"],
+  "exclude": ["node_modules", "build"]
+}

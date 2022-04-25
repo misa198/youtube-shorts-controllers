@@ -1,0 +1,13 @@
+#player-container {
+  position: relative !important;
+}
+
+#shorts-controller-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  width: 477px;
+  height: 848px;
+}
