@@ -1,13 +1,46 @@
-#player-container {
-  position: relative !important;
+.player-controls.style-scope.ytd-reel-video-renderer {
+  opacity: 0 !important;
 }
 
-#shorts-controller-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  width: 477px;
-  height: 848px;
+#player-container {
+  position: relative !important;
+
+  #shorts-controller-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    width: 477px;
+    height: 848px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+
+    .shorts-controller {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      &__buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &__button {
+        width: 60px;
+        height: 60px;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  &:hover #shorts-controller-overlay {
+    opacity: 1;
+  }
 }
