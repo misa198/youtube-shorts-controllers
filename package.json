@@ -1,6 +1,6 @@
 {
   "name": "youtube-shorts-controller",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Youtube Shorts Controller",
   "main": "index.js",
   "repository": "https://github.com/misa198/youtube-shorts-controller/tree/master",
