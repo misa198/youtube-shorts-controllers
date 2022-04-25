@@ -35,6 +35,12 @@ const start = async () => {
           const muteButton = playerContainer.querySelector(
             '.mute-button'
           ) as HTMLButtonElement;
+          const forwardButton = playerContainer.querySelector(
+            '.forward-button'
+          ) as HTMLButtonElement;
+          const rewindButton = playerContainer.querySelector(
+            '.rewind-button'
+          ) as HTMLButtonElement;
 
           playerContainerObserver.observe('video', {
             add(videoElement) {
@@ -86,6 +92,13 @@ const start = async () => {
                 } else {
                   _videoElement.muted = true;
                 }
+              });
+
+              forwardButton.addEventListener('click', () => {
+                _videoElement.currentTime += 5;
+              });
+              rewindButton.addEventListener('click', () => {
+                _videoElement.currentTime -= 5;
               });
             },
           });

@@ -14,7 +14,7 @@ export const controllerHtml = `
   </div>
   <div class="shorts-controller">
     <div class="shorts-controller__buttons">
-      <button class="ytp-prev-button ytp-button shorts-controller__button">
+      <button class="ytp-prev-button ytp-button shorts-controller__button rewind-button">
         <svg height="100%" version="1.1" viewBox="0 0 36 36" width="100%">
           <path
             class="ytp-svg-fill"
@@ -32,7 +32,7 @@ export const controllerHtml = `
           ></path>
         </svg>
       </button>
-      <button class="ytp-next-button ytp-button shorts-controller__button">
+      <button class="ytp-next-button ytp-button shorts-controller__button forward-button">
         <svg height="100%" version="1.1" viewBox="0 0 36 36" width="100%">
           <path
             class="ytp-svg-fill"
