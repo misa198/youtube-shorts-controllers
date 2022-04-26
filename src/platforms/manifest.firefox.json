@@ -5,7 +5,7 @@
   "homepage_url": "https://github.com/misa198/youtube-shorts-controller",
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/shorts/*"],
+      "matches": ["https://www.youtube.com/*"],
       "js": ["content.js"],
       "css": ["content.css"],
       "run_at": "document_start"
