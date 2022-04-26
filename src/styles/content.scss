@@ -2,82 +2,86 @@
   opacity: 0 !important;
 }
 
-.reel-video-in-sequence.style-scope.ytd-shorts > #player-container {
-  position: relative !important;
+.reel-video-in-sequence.style-scope.ytd-shorts {
+  #player-container {
+    position: relative !important;
 
-  .mute-button {
-    width: 36px;
-    height: 36px;
-    position: absolute !important;
-    top: 16px;
-    right: 16px;
-    z-index: 11;
-    cursor: pointer;
-
-    svg {
+    .mute-button {
       width: 36px;
       height: 36px;
-      fill: #fff;
-    }
-  }
+      position: absolute !important;
+      top: 16px;
+      right: 16px;
+      z-index: 11;
+      cursor: pointer;
 
-  .processbar {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 477px;
-    height: 3px;
-
-    &__container {
-      position: relative;
-      width: 100%;
-      height: 100%;
+      svg {
+        width: 36px;
+        height: 36px;
+        fill: #fff;
+      }
     }
 
-    &__thumb {
+    .processbar {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: var(--ytd-shorts-player-width);
+      min-width: var(--ytd-shorts-min-width);
+      height: 3px;
+
+      &__container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      &__thumb {
+        position: absolute;
+        height: 100%;
+        background-color: #c00;
+        transition: width 0.1s;
+      }
+    }
+
+    #shorts-controller-overlay {
       position: absolute;
-      height: 100%;
-      background-color: #c00;
-      transition: width 0.1s;
-    }
-  }
-
-  #shorts-controller-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-    width: 477px;
-    height: 848px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-
-    .shorts-controller {
-      width: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10;
+      width: var(--ytd-shorts-player-width);
+      min-width: var(--ytd-shorts-min-width);
+      height: 848px;
       display: flex;
       justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
 
-      &__buttons {
+      .shorts-controller {
         width: 100%;
         display: flex;
         justify-content: center;
-        align-items: center;
-      }
 
-      &__button {
-        width: 60px;
-        height: 60px;
-        margin-left: 10px;
-        margin-right: 10px;
+        &__buttons {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        &__button {
+          width: 60px;
+          height: 60px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
       }
     }
-  }
 
-  &:hover #shorts-controller-overlay {
-    opacity: 1;
+    &:hover #shorts-controller-overlay {
+      opacity: 1;
+    }
   }
 }
