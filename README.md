@@ -7,9 +7,6 @@ Youtube Shorts Controller
 <p align="center">
   <a href="https://chrome.google.com/webstore/detail/fbkgbegeloakaicldjgkamfmpjhlmibi">
     <img src="https://img.shields.io/badge/Google_chrome-red?style=for-the-badge&logo=Google-chrome&logoColor=white" />
-  <a href="https://microsoftedge.microsoft.com/addons/detail/ehioloiaolpogkmleeippcmnideabdah">
-    <img src="https://img.shields.io/badge/Microsoft_Edge-0078D7?style=for-the-badge&logo=Microsoft-edge&logoColor=white" />
-  </a>
   <a href="https://addons.mozilla.org/vi/firefox/addon/youtube-short-controller/">
     <img src="https://img.shields.io/badge/Firefox_Browser-FF7139?style=for-the-badge&logo=Firefox-Browser&logoColor=white" />
   </a>

@@ -50,6 +50,7 @@
       left: 0;
       background: rgba(0, 0, 0, 0.5);
       z-index: 10;
+      height: var(--ytd-shorts-player-height) !important;
       width: var(--ytd-shorts-player-width);
       min-width: var(--ytd-shorts-min-width);
       height: 848px;
