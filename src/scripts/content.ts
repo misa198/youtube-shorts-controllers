@@ -4,12 +4,12 @@ import '../styles/content.scss';
 import { TIME_STEP_KEY } from './constants/config';
 import {
   controllerHtml,
+  mutedIconD,
+  mutedIconId,
   pauseIconD,
   pauseIconId,
   playIconD,
   playIconId,
-  mutedIconD,
-  mutedIconId,
   unmuteIconD,
   unmuteIconId,
 } from './constants/controllerHtml';

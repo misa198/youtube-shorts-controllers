@@ -5,14 +5,25 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin');
 
+const slash = (path) => {
+  const isExtendedLengthPath = /^\\\\\?\\/.test(path);
+  const hasNonAscii = /[^\u0000-\u0080]+/.test(path);
+
+  if (isExtendedLengthPath || hasNonAscii) {
+    return path;
+  }
+
+  return path.replace(/\\/g, '/');
+};
+
 const options = {
   mode: 'production',
   entry: {
-    content: path.join(__dirname, 'src', 'scripts', 'content.ts'),
-    popup: path.join(__dirname, 'src', 'scripts', 'popup.ts'),
+    content: slash(path.join(__dirname, 'src', 'scripts', 'content.ts')),
+    popup: slash(path.join(__dirname, 'src', 'scripts', 'popup.ts')),
   },
   output: {
-    path: path.join(__dirname, 'build', process.env.PLATFORM),
+    path: slash(path.join(__dirname, 'build', process.env.PLATFORM)),
     filename: '[name].js',
   },
   resolve: {
@@ -38,7 +49,7 @@ const options = {
     new CopyPlugin({
       patterns: [
         {
-          from: `src/platforms/manifest.${process.env.PLATFORM}.json`,
+          from: slash(`src/platforms/manifest.${process.env.PLATFORM}.json`),
           to: 'manifest.json',
           transform: (content) =>
             Buffer.from(
@@ -52,11 +63,11 @@ const options = {
             ),
         },
         {
-          from: path.join(__dirname, 'src', 'icons/*.png'),
-          to: 'icons/[name][ext]',
+          from: slash(path.join(__dirname, 'src', 'icons', '*.png')),
+          to: slash('icons/[name][ext]'),
         },
         {
-          from: path.join(__dirname, 'src', 'templates', '*.html'),
+          from: slash(path.join(__dirname, 'src', 'templates', '*.html')),
           to: '[name].html',
         },
       ],
