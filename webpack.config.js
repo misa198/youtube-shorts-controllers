@@ -52,11 +52,11 @@ const options = {
             ),
         },
         {
-          from: path.join(__dirname, 'src', 'icons/*.png'),
+          from: path.join(__dirname, 'src', 'icons/'),
           to: 'icons/[name][ext]',
         },
         {
-          from: path.join(__dirname, 'src', 'templates', '*.html'),
+          from: path.join(__dirname, 'src', 'templates/'),
           to: '[name].html',
         },
       ],

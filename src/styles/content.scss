@@ -26,8 +26,7 @@
       position: absolute !important;
       top: 0 !important;
       left: 0 !important;
-      width: var(--ytd-shorts-player-width);
-      min-width: var(--ytd-shorts-min-width);
+      width: 100%;
       height: 3px;
 
       &__container {
@@ -50,10 +49,8 @@
       left: 0;
       background: rgba(0, 0, 0, 0.5);
       z-index: 10;
-      height: var(--ytd-shorts-player-height) !important;
-      width: var(--ytd-shorts-player-width);
-      min-width: var(--ytd-shorts-min-width);
-      height: 848px;
+      height: 100%;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
