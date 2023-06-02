@@ -14,6 +14,7 @@ import {
   unmuteIconId,
 } from './constants/controllerHtml';
 import { get } from './utils/storage';
+import { convertSecondsToTime } from './utils/time';
 
 const start = async () => {
   await domLoaded;
@@ -22,33 +23,44 @@ const start = async () => {
     add(shortContainer) {
       const shortContainerObserver = new SelectorObserver(shortContainer);
       shortContainerObserver.observe(
-        '.reel-video-in-sequence.style-scope.ytd-shorts > #player-container',
+        '.reel-video-in-sequence.style-scope.ytd-shorts #overlay',
         {
-          add(playerContainer) {
-            playerContainer.insertAdjacentHTML('beforeend', controllerHtml);
-            const playerContainerObserver = new SelectorObserver(
-              playerContainer
-            );
-            const playButton = playerContainer.querySelector(
+          add(overlayController) {
+            const player =
+              overlayController?.parentElement?.parentElement?.parentElement?.querySelector(
+                '#player-container'
+              ) as HTMLDivElement;
+            overlayController.insertAdjacentHTML('beforeend', controllerHtml);
+            const additionalController = overlayController.querySelector(
+              '#shorts-controller-overlay'
+            ) as HTMLDivElement;
+            const playerContainerObserver = new SelectorObserver(player);
+            const playButton = overlayController.querySelector(
               'button.shorts-controller__button--play'
             ) as HTMLButtonElement;
             const playPauseIcon = playButton.querySelector(
               '.play-pause-icon-path'
             ) as HTMLButtonElement;
-            const speakerIconPath = playerContainer.querySelector(
+            const speakerIconPath = overlayController.querySelector(
               '.speaker-icon-path'
             ) as HTMLButtonElement;
-            const muteButton = playerContainer.querySelector(
+            const muteButton = overlayController.querySelector(
               '.mute-button'
             ) as HTMLButtonElement;
-            const forwardButton = playerContainer.querySelector(
+            const forwardButton = overlayController.querySelector(
               '.forward-button'
             ) as HTMLButtonElement;
-            const rewindButton = playerContainer.querySelector(
+            const rewindButton = overlayController.querySelector(
               '.rewind-button'
             ) as HTMLButtonElement;
-            const processbarThumb = playerContainer.querySelector(
+            const processbarThumb = overlayController.querySelector(
               '.processbar__thumb'
+            ) as HTMLDivElement;
+            const processBar = overlayController.querySelector(
+              '.processbar'
+            ) as HTMLDivElement;
+            const timeDisplay = overlayController.querySelector(
+              '.buttons-session__process'
             ) as HTMLDivElement;
 
             playerContainerObserver.observe('video', {
@@ -71,12 +83,44 @@ const start = async () => {
                   }
                 });
 
+                player.parentElement?.addEventListener('mouseover', () => {
+                  if (
+                    !additionalController.classList.contains(
+                      'shorts-controller-overlay--active'
+                    )
+                  ) {
+                    additionalController.classList.add(
+                      'shorts-controller-overlay--active'
+                    );
+                  }
+                });
+                player.parentElement?.addEventListener('mouseout', () => {
+                  if (
+                    additionalController.classList.contains(
+                      'shorts-controller-overlay--active'
+                    )
+                  ) {
+                    additionalController.classList.remove(
+                      'shorts-controller-overlay--active'
+                    );
+                  }
+                });
+
                 const _videoElement = videoElement as HTMLVideoElement;
+                const isPlaying = () =>
+                  _videoElement.currentTime > 0 &&
+                  !_videoElement.paused &&
+                  !_videoElement.ended &&
+                  _videoElement.readyState > _videoElement.HAVE_CURRENT_DATA;
+
                 videoElement.addEventListener('timeupdate', () => {
                   const duration = _videoElement.duration;
                   const currentTime = _videoElement.currentTime;
                   const processbarWidth = (currentTime / duration) * 100 + '%';
                   processbarThumb.style.width = processbarWidth;
+                  timeDisplay.innerHTML = `${convertSecondsToTime(
+                    currentTime
+                  )}/${convertSecondsToTime(duration)}`;
                 });
                 if (_videoElement.paused) {
                   playPauseIcon.setAttribute('d', pauseIconD);
@@ -93,8 +137,8 @@ const start = async () => {
                   speakerIconPath.setAttribute('id', unmuteIconId);
                 }
 
-                playButton.addEventListener('click', () => {
-                  if (_videoElement.paused) {
+                playButton.addEventListener('mouseup', () => {
+                  if (!isPlaying()) {
                     _videoElement.play();
                   } else {
                     _videoElement.pause();
@@ -102,11 +146,7 @@ const start = async () => {
                 });
 
                 muteButton.addEventListener('click', () => {
-                  if (_videoElement.muted) {
-                    _videoElement.muted = false;
-                  } else {
-                    _videoElement.muted = true;
-                  }
+                  _videoElement.muted = !_videoElement.muted;
                 });
 
                 forwardButton.addEventListener('click', () => {
@@ -122,16 +162,76 @@ const start = async () => {
                   });
                 });
 
-                playerContainer.addEventListener('keydown', (e) => {
-                  switch ((e as KeyboardEvent).key) {
-                    case 'ArrowLeft':
-                      rewindButton.click();
-                      break;
-                    case 'ArrowRight':
-                      forwardButton.click();
-                      break;
+                overlayController.parentElement?.parentElement?.parentElement?.addEventListener(
+                  'keydown',
+                  (e) => {
+                    switch ((e as KeyboardEvent).key) {
+                      case 'ArrowLeft':
+                        rewindButton.click();
+                        break;
+                      case 'ArrowRight':
+                        forwardButton.click();
+                        break;
+                    }
                   }
-                });
+                );
+
+                if (processBar) {
+                  const move = (e: MouseEvent) => {
+                    const _e = e as MouseEvent;
+
+                    const thumbOffsetLeft =
+                      processbarThumb.getBoundingClientRect().left;
+                    const processbarWidth = processBar.clientWidth;
+                    if (
+                      _e.clientX >= thumbOffsetLeft &&
+                      _e.clientX <= processbarWidth + thumbOffsetLeft
+                    ) {
+                      const currentPos = _e.clientX - thumbOffsetLeft;
+                      const movePercent = (currentPos / processbarWidth) * 100;
+                      if (movePercent > 100) {
+                        processbarThumb.style.width = '100%';
+                      } else if (movePercent < 0) {
+                        processbarThumb.style.width = '0%';
+                      } else {
+                        processbarThumb.style.width = movePercent + '%';
+                      }
+                    }
+                  };
+
+                  const continueVideo = () => {
+                    const movePercent =
+                      parseFloat(processbarThumb.style.width) / 100;
+                    const currentTime = _videoElement.duration * movePercent;
+                    if (currentTime) {
+                      _videoElement.currentTime = currentTime;
+
+                      if (!isPlaying()) {
+                        _videoElement.play();
+                      }
+                    }
+                  };
+
+                  processBar.addEventListener('click', (e) => {
+                    if (isPlaying()) {
+                      _videoElement.pause();
+                    }
+                    move(e);
+                    continueVideo();
+                  });
+
+                  processBar.addEventListener('mousedown', (e) => {
+                    if (isPlaying()) {
+                      _videoElement.pause();
+                    }
+                    document.addEventListener('mousemove', move);
+                  });
+
+                  document.addEventListener('mouseup', () => {
+                    document.removeEventListener('mousemove', move);
+                    continueVideo();
+                  });
+                }
               },
             });
           },

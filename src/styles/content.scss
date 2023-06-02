@@ -1,85 +1,107 @@
-.player-controls.style-scope.ytd-reel-video-renderer {
-  opacity: 0 !important;
-}
-
 .reel-video-in-sequence.style-scope.ytd-shorts {
-  #player-container {
-    position: relative !important;
+  #progress-bar {
+    display: none !important;
+  }
 
-    .mute-button {
-      width: 36px;
-      height: 36px;
-      position: absolute !important;
-      top: 16px;
-      right: 16px;
-      z-index: 11;
-      cursor: pointer;
-
-      svg {
-        width: 36px;
-        height: 36px;
-        fill: #fff;
-      }
-    }
-
-    .processbar {
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100%;
-      height: 3px;
-
-      &__container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-      }
-
-      &__thumb {
-        position: absolute;
-        height: 100%;
-        background-color: #c00;
-        transition: width 0.1s;
-      }
-    }
+  #overlay {
+    user-select: none;
 
     #shorts-controller-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 10;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
+      height: 0;
+      transition: height 0.2s;
 
-      .shorts-controller {
+      .processbar-wrapper {
+        position: relative;
+      }
+
+      .processbar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
         width: 100%;
-        display: flex;
-        justify-content: center;
+        height: 4px;
+        background-color: #ffffff8d;
+        cursor: pointer;
+        transition: height 0.2s;
 
-        &__buttons {
+        &__container {
+          position: relative;
           width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          height: 100%;
         }
 
-        &__button {
-          width: 60px;
-          height: 60px;
-          margin-left: 10px;
-          margin-right: 10px;
+        &__thumb {
+          position: absolute;
+          height: 100%;
+          background-color: #c00;
+
+          &__inner {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            background-color: transparent;
+
+            &__dot {
+              position: absolute;
+              top: -4px;
+              right: -6px;
+              width: 12px;
+              height: 12px;
+              border-radius: 50%;
+              background-color: #c00;
+            }
+          }
+        }
+      }
+
+      padding: 0 14px;
+      pointer-events: auto !important;
+
+      .buttons-session {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+
+        &__process {
+          color: white;
+          font-size: 13px;
+        }
+
+        .navigate-buttons__buttons {
+          display: flex;
+          align-items: center;
+
+          button {
+            width: 36px;
+            height: 36px;
+            margin-right: 10px;
+            cursor: pointer;
+          }
+        }
+
+        .mute-button {
+          width: 36px;
+          height: 36px;
+          z-index: 11;
+          cursor: pointer;
+
+          svg {
+            width: 36px;
+            height: 36px;
+            fill: #fff;
+          }
         }
       }
     }
 
-    &:hover #shorts-controller-overlay {
-      opacity: 1;
+    .shorts-controller-overlay--active {
+      height: 60px !important;
     }
   }
+}
+
+.player-controls.style-scope.ytd-reel-video-renderer {
+  opacity: 0 !important;
 }
